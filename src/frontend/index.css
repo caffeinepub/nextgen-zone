@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Font Faces ─────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque[opsz,wdth,wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sora";
+  src: url("/assets/fonts/Sora[wght].woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono[wght].woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Design Tokens ──────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --radius: 0.75rem;
+    /* Dark cyberpunk gaming theme */
+    --background: 0.12 0.015 270;
+    --foreground: 0.94 0.02 240;
+    --card: 0.16 0.02 270;
+    --card-foreground: 0.94 0.02 240;
+    --popover: 0.14 0.02 270;
+    --popover-foreground: 0.94 0.02 240;
+    --primary: 0.72 0.2 250;
+    --primary-foreground: 0.98 0.005 240;
+    --secondary: 0.2 0.025 270;
+    --secondary-foreground: 0.85 0.04 240;
+    --muted: 0.18 0.018 270;
+    --muted-foreground: 0.6 0.04 250;
+    --accent: 0.65 0.28 300;
+    --accent-foreground: 0.98 0.005 240;
+    --destructive: 0.6 0.22 20;
+    --destructive-foreground: 0.98 0.005 240;
+    --border: 0.28 0.04 270;
+    --input: 0.22 0.03 270;
+    --ring: 0.72 0.2 250;
+    --chart-1: 0.72 0.2 250;
+    --chart-2: 0.65 0.28 300;
+    --chart-3: 0.75 0.22 180;
+    --chart-4: 0.8 0.18 60;
+    --chart-5: 0.7 0.25 140;
+    --sidebar: 0.14 0.02 270;
+    --sidebar-foreground: 0.9 0.02 240;
+    --sidebar-primary: 0.72 0.2 250;
+    --sidebar-primary-foreground: 0.98 0.005 240;
+    --sidebar-accent: 0.2 0.025 270;
+    --sidebar-accent-foreground: 0.85 0.04 240;
+    --sidebar-border: 0.25 0.04 270;
+    --sidebar-ring: 0.72 0.2 250;
+
+    /* Custom neon tokens */
+    --neon-blue: 0.72 0.2 250;
+    --neon-purple: 0.65 0.28 300;
+    --neon-cyan: 0.75 0.22 200;
+    --neon-gold: 0.82 0.2 85;
+    --glow-blue: 0 0 20px oklch(0.72 0.2 250 / 0.6);
+    --glow-purple: 0 0 20px oklch(0.65 0.28 300 / 0.6);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, oklch(0.72 0.2 250 / 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, oklch(0.65 0.28 300 / 0.06) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: oklch(0.14 0.02 270);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(0.35 0.08 270);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.72 0.2 250 / 0.7);
+  }
+}
+
+/* ─── Utility Classes ────────────────────────────────────────────────── */
+@layer utilities {
+  .neon-border-blue {
+    border: 1px solid oklch(0.72 0.2 250 / 0.4);
+    box-shadow: 0 0 10px oklch(0.72 0.2 250 / 0.2), inset 0 0 10px oklch(0.72 0.2 250 / 0.05);
+  }
+
+  .neon-border-purple {
+    border: 1px solid oklch(0.65 0.28 300 / 0.4);
+    box-shadow: 0 0 10px oklch(0.65 0.28 300 / 0.2), inset 0 0 10px oklch(0.65 0.28 300 / 0.05);
+  }
+
+  .glow-text-blue {
+    text-shadow: 0 0 20px oklch(0.72 0.2 250 / 0.8), 0 0 40px oklch(0.72 0.2 250 / 0.4);
+  }
+
+  .glow-text-purple {
+    text-shadow: 0 0 20px oklch(0.65 0.28 300 / 0.8), 0 0 40px oklch(0.65 0.28 300 / 0.4);
+  }
+
+  .glass-card {
+    background: oklch(0.16 0.02 270 / 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid oklch(0.35 0.06 270 / 0.4);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, oklch(0.8 0.2 250), oklch(0.75 0.28 300));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .neon-btn {
+    background: linear-gradient(135deg, oklch(0.72 0.2 250 / 0.2), oklch(0.65 0.28 300 / 0.2));
+    border: 1px solid oklch(0.72 0.2 250 / 0.5);
+    box-shadow: 0 0 15px oklch(0.72 0.2 250 / 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .neon-btn:hover {
+    background: linear-gradient(135deg, oklch(0.72 0.2 250 / 0.35), oklch(0.65 0.28 300 / 0.35));
+    box-shadow: 0 0 25px oklch(0.72 0.2 250 / 0.5), 0 0 50px oklch(0.72 0.2 250 / 0.2);
+  }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(oklch(0.72 0.2 250 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(0.72 0.2 250 / 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────── */
+@keyframes neon-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}

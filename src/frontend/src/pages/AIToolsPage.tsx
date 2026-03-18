@@ -95,27 +95,37 @@ async function generateGeminiImage(
   prompt: string,
 ): Promise<string> {
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=${apiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-preview-image-generation:generateContent?key=${apiKey}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        instances: [{ prompt }],
-        parameters: { sampleCount: 1 },
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { responseModalities: ["IMAGE", "TEXT"] },
       }),
     },
   );
 
   if (!response.ok) {
-    throw new Error(`Gemini Image API error: ${response.status}`);
+    const errText = await response.text();
+    throw new Error(`Gemini Image API error: ${response.status} ${errText}`);
   }
 
   const data = (await response.json()) as {
-    predictions: Array<{ bytesBase64Encoded: string }>;
+    candidates: Array<{
+      content: {
+        parts: Array<{
+          inlineData?: { mimeType: string; data: string };
+          text?: string;
+        }>;
+      };
+    }>;
   };
-  const base64 = data.predictions[0]?.bytesBase64Encoded;
-  if (!base64) throw new Error("No image data returned");
-  return `data:image/png;base64,${base64}`;
+
+  const parts = data.candidates[0]?.content?.parts ?? [];
+  const imagePart = parts.find((p) => p.inlineData);
+  if (!imagePart?.inlineData) throw new Error("No image data returned");
+  return `data:${imagePart.inlineData.mimeType};base64,${imagePart.inlineData.data}`;
 }
 
 function APISettingsDialog({ t }: { t: (key: string) => string }) {
@@ -847,7 +857,7 @@ export default function AIToolsPage() {
                   {t("ai.image.header")}
                   <Badge className="ml-auto bg-accent/20 text-accent border-accent/30 text-xs">
                     <Sparkles className="w-3 h-3 mr-1" />
-                    Gemini Imagen
+                    Gemini 2.0 Flash
                   </Badge>
                 </CardTitle>
               </CardHeader>

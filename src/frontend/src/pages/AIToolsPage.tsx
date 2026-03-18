@@ -41,7 +41,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 import { useInternetIdentity } from "../hooks/useInternetIdentity";
 import { useGenerateStory, useGenerateTitles } from "../hooks/useQueries";
 
-const GEMINI_API_KEY_DEFAULT = "AIzaSyCxCEUdPU0xxQumgahNSObtgYMWCLDlBq0";
+const GEMINI_API_KEY_DEFAULT = "AIzaSyAY92tphWrbGvuSFbmlMdKMItGHJBWAkxY";
 
 const AI_RESPONSES = [
   "That's an intriguing thought! Based on cutting-edge research, the answer involves several fascinating factors. Let me break it down for you...",
